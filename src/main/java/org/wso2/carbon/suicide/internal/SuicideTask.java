@@ -36,7 +36,6 @@ public class SuicideTask implements Runnable {
     public SuicideTask() {
     }
 
-    @Override
     public void run() {
         if(random.nextInt(SUICIDE_SEED) == suicideIndex){
             log.info("Carbon server is committing suicide... I'm sorry mama :(");

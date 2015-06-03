@@ -17,6 +17,8 @@
 */
 package org.wso2.carbon.suicide.internal;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -28,13 +30,17 @@ import java.util.concurrent.TimeUnit;
  * TODO: class level comment
  */
 public class SuicideActivator implements BundleActivator {
+    private static final Log log = LogFactory.getLog(SuicideActivator.class);
 
     public void start(BundleContext context){
-        ScheduledExecutorService suicideScheduler = Executors.newScheduledThreadPool(1);
-        suicideScheduler.scheduleWithFixedDelay(new SuicideTask(), 30, 30, TimeUnit.SECONDS);
+        try {
+            ScheduledExecutorService suicideScheduler = Executors.newScheduledThreadPool(1);
+            suicideScheduler.scheduleWithFixedDelay(new SuicideTask(), 30, 30, TimeUnit.SECONDS);
+        } catch (Throwable e) {
+            log.error("Cannot start SuicideActivator", e);
+        }
     }
 
-    @Override
     public void stop(BundleContext bundleContext) throws Exception {
 
     }
